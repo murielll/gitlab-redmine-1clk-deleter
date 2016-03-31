@@ -13,7 +13,7 @@ $ pip install -r requirements.txt
 Sync database  
 $ ./manage.py migrate  
 
-Create admin
+Create admin  
 $ ./manage.py createsuperuser  
 
 Admin URL: http://your.domain/admin
