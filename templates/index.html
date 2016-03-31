@@ -1,0 +1,23 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html class="general">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Redmine Gitlab Deleter</title>
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+  </head>
+
+  <body id="indexbody" class="general">
+    <form action="/" method="post">
+    {% csrf_token %} 
+      <header>Login</header>
+      <label>Username </label>
+      <input name="username"/>
+      <label>Password </label>
+      <input type="password" name="password"/>
+      <button type="submit">Login</button>
+    </form>
+  </body>
+
+</html>

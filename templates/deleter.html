@@ -1,0 +1,65 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html >
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Redmine Gitlab Deleter</title>
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+  </head>
+
+  <body>
+
+    <form id="delAcc" action="/deleter/">
+    {% csrf_token %}
+      <h2>Enter email user you want to delete</h2><br>
+      <input name="email" type="email" required/>
+      <label><input type="checkbox" name="redmine"/> Redmine </label><br>
+      <label><input type="checkbox" name="gitlab"/> Gitlab </label><br>
+      <button class="button2" type="submit">Delete</button>
+      <button class="button2" type="reset">Reset</button>
+    </form>
+
+    <div class="results" style="display: none">
+      <h2>Results</h2>
+      <div id="result">
+        <!-- Here are the results of removal -->    
+      </div>
+    </div>
+
+    <form class="logout" action="/logout/" method="get">
+        <button type="submit"> Logout </button>
+    </form>
+    <script type="text/javascript" src="{% static "js/jquery-2.2.2.min.js" %}"></script>
+    <script type="text/javascript">
+        $( document ).ready(function() {
+            $( "#delAcc" ).submit(function(event) {
+                // Stop form from submitting normally
+                event.preventDefault();
+
+                var $form = $( this ),
+                    email = $form.find( "input[name='email']" ).val(),
+                    redmine = +$form.find( "input[name='redmine']" ).prop( "checked" ),
+                    gitlab = +$form.find( "input[name='gitlab']" ).prop( "checked" ),
+                    url = $form.attr( "action" ),
+                    csrf =  $form.find( "input[name='csrfmiddlewaretoken']" ).val();
+                // Send the data using post
+                  
+                var posting = $.post(url, {
+                       'email': email,
+                       'redmine': redmine,
+                       'gitlab': gitlab,
+                       'csrfmiddlewaretoken': csrf,
+                    });
+                
+                // Put the results in a div
+                posting.done(function(data) {
+                  $("#result").empty().append(data);
+                });
+
+                $("div.results").show();
+            });
+        });
+    </script>
+  </body>
+</html>
